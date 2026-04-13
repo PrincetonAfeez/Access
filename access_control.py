@@ -120,3 +120,8 @@ class Keycard:
         self.__revocation_reason = reason
         self.__revoked_at = revoked_at or datetime.now()
 
+    def deactivate(self) -> None:
+        if self.__revoked:
+            raise ValueError("Cannot deactivate a revoked keycard.")
+        self.__active = False
+
