@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vaultos-access"
+version = "0.1.0"
+description = "Vault OS Day 16 — keycard and facility access control simulator"
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["vaultos", "access-control", "education", "cli", "simulation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Education",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Education",
+    "Topic :: Security",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["coverage[toml]>=7.6.0"]
+
+[project.scripts]
+vaultos-access = "cli:main"
+
+[tool.setuptools]
+py-modules = ["access_control", "cli", "main"]
+
+[tool.coverage.run]
+branch = true
+source = ["access_control", "cli"]
+
+[tool.coverage.report]
+skip_empty = true
+show_missing = true
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "if __name__ == .__main__.:"]
