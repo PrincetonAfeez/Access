@@ -138,6 +138,20 @@ class VaultOSCLI:
         print(f"{verdict}: {decision.reason}")
         if decision.warning:
             print(f"WARNING: {decision.warning}")
+    
+    def _view_access_log(self) -> None:
+        entries = self.controller.log.entries()
+        if not entries:
+            print("No access attempts recorded yet.")
+            return
+
+        print("\nAccess Log")
+        for entry in entries:
+            verdict = "GRANTED" if entry.granted else "DENIED"
+            print(
+                f"{entry.timestamp.strftime('%Y-%m-%d %H:%M:%S')} | "
+                f"{entry.keycard_id} | {entry.gate_name} | {verdict} | {entry.reason}"
+            )
 
 
 
