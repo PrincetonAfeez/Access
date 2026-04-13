@@ -407,3 +407,38 @@ class AccessController:
 
     def list_gates(self) -> list[AccessGate]:
         return sorted(self._gates.values(), key=lambda gate: (gate.required_access_level, gate.name))
+    
+    def attempt_access(
+        self,
+        card_id: str,
+        gate_name: str,
+        timestamp: datetime | None = None,
+    ) -> AccessDecision:
+        timestamp = naive_facility_moment(timestamp or datetime.now())
+        normalized_card_id = card_id.strip().upper()
+        gate = self.get_gate(gate_name)
+        if gate is None:
+            raise KeyError(f"Unknown gate '{gate_name}'.")
+
+        card = self.registry.get_card(normalized_card_id)
+        if card is None:
+            decision = AccessDecision(
+                granted=False,
+                reason="Unknown keycard.",
+                keycard_id=normalized_card_id,
+                gate_name=gate.name,
+                timestamp=timestamp,
+            )
+        else:
+            decision = gate.check_access(card, timestamp)
+
+        entry = self.log.record(decision)
+        alert = self.monitor.observe(entry)
+        if alert:
+            self.log.record_alert(alert)
+            decision = decision.with_warning(alert.message)
+        return decision
+
+    def flagged_cards(self) -> tuple[SecurityAlert, ...]:
+        return self.monitor.flagged_cards()
+
