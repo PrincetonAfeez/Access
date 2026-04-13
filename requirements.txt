@@ -1,0 +1,8 @@
+# Editable install of vaultos-access from this directory.
+# Runtime uses only the Python standard library (no extra PyPI deps).
+#
+#   pip install -r requirements.txt
+#
+# For tests and coverage, use the dev extra (see README):
+#   pip install -e ".[dev]"
+-e .
