@@ -487,4 +487,5 @@ def build_demo_controller() -> AccessController:
         ),
         AccessGate("Control Room", "North Tower", AccessLevel.ADMIN),
     ]
-
+    
+    return AccessController(registry=registry, gates=gates)
