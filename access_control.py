@@ -470,3 +470,21 @@ def build_demo_controller() -> AccessController:
         issue_date=today - timedelta(days=30),
         expiry_date=today + timedelta(days=365),
     )
+    
+    gates = [
+        AccessGate("Lobby Turnstile", "Main Entrance", AccessLevel.VISITOR),
+        AccessGate(
+            "Operations Wing",
+            "East Hall",
+            AccessLevel.STAFF,
+            time_window=GateSchedule(time(hour=8), time(hour=18)),
+        ),
+        AccessGate(
+            "Vault Antechamber",
+            "Sublevel 2",
+            AccessLevel.MANAGER,
+            time_window=GateSchedule(time(hour=6), time(hour=22)),
+        ),
+        AccessGate("Control Room", "North Tower", AccessLevel.ADMIN),
+    ]
+
