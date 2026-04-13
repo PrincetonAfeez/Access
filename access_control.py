@@ -274,4 +274,21 @@ class AccessLog:
         self._entries.append(entry)
         return entry
 
+    def record_alert(self, alert: SecurityAlert) -> None:
+        self._alerts.append(alert)
+
+    def entries(self) -> tuple[AccessLogEntry, ...]:
+        return tuple(self._entries)
+
+    def alerts(self) -> tuple[SecurityAlert, ...]:
+        return tuple(self._alerts)
+
+    def replace_stored_entries(
+        self,
+        entries: list[AccessLogEntry],
+        alerts: list[SecurityAlert],
+    ) -> None:
+        self._entries = list(entries)
+        self._alerts = list(alerts)
+
 
