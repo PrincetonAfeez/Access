@@ -442,3 +442,6 @@ class AccessController:
     def flagged_cards(self) -> tuple[SecurityAlert, ...]:
         return self.monitor.flagged_cards()
 
+def build_demo_controller() -> AccessController:
+    registry = CardRegistry()
+    today = date.today()
