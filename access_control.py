@@ -107,3 +107,16 @@ class Keycard:
         if not isinstance(new_level, AccessLevel):
             raise TypeError("new_level must be an AccessLevel.")
         self.__access_level = new_level
+    
+    def revoke(self, reason: str, revoked_at: datetime | None = None) -> None:
+        reason = reason.strip()
+        if not reason:
+            raise ValueError("A revocation reason is required.")
+        if self.__revoked:
+            raise ValueError("Keycard is already revoked.")
+
+        self.__active = False
+        self.__revoked = True
+        self.__revocation_reason = reason
+        self.__revoked_at = revoked_at or datetime.now()
+
