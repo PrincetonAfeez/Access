@@ -67,3 +67,22 @@ class Keycard:
         self.__revoked_at: datetime | None = None
 
 
+    @property  
+    def card_id(self) -> str:
+        return self.__card_id
+
+    @property
+    def owner_name(self) -> str:
+        return self.__owner_name
+
+    @property
+    def access_level(self) -> AccessLevel:
+        return self.__access_level
+
+    @property
+    def issue_date(self) -> date:
+        return self.__issue_date
+
+    @property
+    def expiry_date(self) -> date:
+        return self.__expiry_date
