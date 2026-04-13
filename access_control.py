@@ -258,4 +258,9 @@ class AccessGate:
         return True, "Access granted."
 
 
+class AccessLog:
+    def __init__(self) -> None:
+        self._entries: list[AccessLogEntry] = []
+        self._alerts: list[SecurityAlert] = []
+
 
