@@ -398,3 +398,12 @@ class AccessController:
         self.monitor = monitor or SuspiciousActivityMonitor()
         self._gates = {gate.name.lower(): gate for gate in gates}
 
+    
+    def add_gate(self, gate: AccessGate) -> None:
+        self._gates[gate.name.lower()] = gate
+
+    def get_gate(self, gate_name: str) -> AccessGate | None:
+        return self._gates.get(gate_name.strip().lower())
+
+    def list_gates(self) -> list[AccessGate]:
+        return sorted(self._gates.values(), key=lambda gate: (gate.required_access_level, gate.name))
