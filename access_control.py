@@ -129,4 +129,8 @@ class Keycard:
         if self.__revoked:
             raise ValueError("Cannot reactivate a revoked keycard.")
         self.__active = True
-
+    
+    def is_expired(self, when: date | datetime) -> bool:
+        if isinstance(when, datetime):
+            when = naive_facility_moment(when).date()
+        return when > self.__expiry_date
