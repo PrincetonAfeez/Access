@@ -28,5 +28,16 @@ class AccessLevel(IntEnum):
             raise ValueError(
                 f"Unknown access level '{raw_value}'. Choose from: {valid_levels}."
             ) from exc
-
-
+ 
+class Keycard:
+    __slots__ = (
+        "__card_id",
+        "__owner_name",
+        "__access_level",
+        "__issue_date",
+        "__expiry_date",
+        "__active",
+        "__revoked",
+        "__revocation_reason",
+        "__revoked_at",
+    )
