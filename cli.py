@@ -49,6 +49,34 @@ class VaultOSCLI:
         print("5. View flagged cards")
         print("6. View active cards")
         print("7. Exit")
+    
+    def _issue_keycard(self) -> None:
+        owner_name = input("Owner name: ").strip()
+        if not owner_name:
+            print("Owner name is required.")
+            return
+
+        access_level = self._prompt_access_level()
+        if access_level is None:
+            return
+
+        valid_days = self._prompt_integer("Expires in how many days? [30]: ", default=30)
+        if valid_days is None:
+            return
+
+        issue_date = date.today()
+        expiry_date = issue_date + timedelta(days=valid_days)
+        card = self.controller.registry.issue_keycard(
+            owner_name=owner_name,
+            access_level=access_level,
+            issue_date=issue_date,
+            expiry_date=expiry_date,
+        )
+        print(
+            f"Issued {card.card_id} to {card.owner_name} "
+            f"({card.access_level.name}) through {card.expiry_date.isoformat()}."
+        )
+
 
 
 
