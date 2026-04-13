@@ -134,3 +134,19 @@ class Keycard:
         if isinstance(when, datetime):
             when = naive_facility_moment(when).date()
         return when > self.__expiry_date
+    
+    def status(self, when: date | datetime | None = None) -> str:
+        if when is None:
+            ref = date.today()
+        elif isinstance(when, datetime):
+            ref = naive_facility_moment(when).date()
+        else:
+            ref = when
+        if self.__revoked:
+            return "REVOKED"
+        if self.is_expired(ref):
+            return "EXPIRED"
+        if not self.__active:
+            return "INACTIVE"
+        return "ACTIVE"
+
