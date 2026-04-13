@@ -353,4 +353,6 @@ class CardRegistry:
         card = Keycard(card_id, owner_name, access_level, issue_date, expiry_date)
         self._cards[card.card_id] = card
         return card
-
+    
+    def get_card(self, card_id: str) -> Keycard | None:
+        return self._cards.get(card_id.strip().upper())
