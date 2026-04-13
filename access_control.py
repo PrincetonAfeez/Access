@@ -262,5 +262,16 @@ class AccessLog:
     def __init__(self) -> None:
         self._entries: list[AccessLogEntry] = []
         self._alerts: list[SecurityAlert] = []
+    
+    def record(self, decision: AccessDecision) -> AccessLogEntry:
+        entry = AccessLogEntry(
+            timestamp=decision.timestamp,
+            keycard_id=decision.keycard_id,
+            gate_name=decision.gate_name,
+            granted=decision.granted,
+            reason=decision.reason,
+        )
+        self._entries.append(entry)
+        return entry
 
 
