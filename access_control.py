@@ -188,3 +188,12 @@ class AccessDecision:
             timestamp=self.timestamp,
             warning=warning,
         )
+
+@dataclass(frozen=True, slots=True)
+class AccessLogEntry:
+    timestamp: datetime
+    keycard_id: str
+    gate_name: str
+    granted: bool
+    reason: str
+
