@@ -356,3 +356,32 @@ class CardRegistry:
     
     def get_card(self, card_id: str) -> Keycard | None:
         return self._cards.get(card_id.strip().upper())
+
+    def require_card(self, card_id: str) -> Keycard:
+        card = self.get_card(card_id)
+        if card is None:
+            raise KeyError(f"No keycard found for ID '{card_id}'.")
+        return card
+
+    def revoke_card(self, card_id: str, reason: str, revoked_at: datetime | None = None) -> Keycard:
+        card = self.require_card(card_id)
+        card.revoke(reason, revoked_at=revoked_at)
+        return card
+
+    def list_active_cards(self, when: date | datetime | None = None) -> list[Keycard]:
+        when = when or date.today()
+        active_cards = [
+            card for card in self._cards.values() if card.active and not card.is_expired(when)
+        ]
+        return sorted(active_cards, key=lambda card: card.card_id)
+
+    def list_by_access_level(self, level: AccessLevel) -> list[Keycard]:
+        matching_cards = [card for card in self._cards.values() if card.access_level == level]
+        return sorted(matching_cards, key=lambda card: card.card_id)
+
+    def all_cards(self) -> list[Keycard]:
+        return sorted(self._cards.values(), key=lambda card: card.card_id)
+
+    def ingest_restored_keycard(self, card: Keycard) -> None:
+        self._cards[card.card_id] = card
+
