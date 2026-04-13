@@ -303,4 +303,30 @@ class SuspiciousActivityMonitor:
         self._denials: dict[str, deque[datetime]] = defaultdict(deque)
         self._flagged_cards: dict[str, SecurityAlert] = {}
 
+    def observe(self, entry: AccessLogEntry) -> SecurityAlert | None:
+        if entry.granted:
+            return None
+
+        attempts = self._denials[entry.keycard_id]
+        attempts.append(entry.timestamp)
+        cutoff = entry.timestamp - self.window
+        while attempts and attempts[0] < cutoff:
+            attempts.popleft()
+
+        if len(attempts) < self.threshold or entry.keycard_id in self._flagged_cards:
+            return None
+
+        window_minutes = int(self.window.total_seconds() // 60)
+        alert = SecurityAlert(
+            timestamp=entry.timestamp,
+            keycard_id=entry.keycard_id,
+            denied_attempts=len(attempts),
+            window_minutes=window_minutes,
+            message=(
+                f"Suspicious activity detected: {len(attempts)} denied attempts "
+                f"within {window_minutes} minutes."
+            ),
+        )
+        self._flagged_cards[entry.keycard_id] = alert
+        return alert
 
