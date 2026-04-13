@@ -18,4 +18,15 @@ class AccessLevel(IntEnum):
     MANAGER = 3
     ADMIN = 4
 
+    @classmethod 
+    def from_string(cls, raw_value: str) -> "AccessLevel":
+        normalized = raw_value.strip().upper() 
+        try:
+            return cls[normalized] 
+        except KeyError as exc:
+            valid_levels = ", ".join(level.name for level in cls)
+            raise ValueError(
+                f"Unknown access level '{raw_value}'. Choose from: {valid_levels}."
+            ) from exc
+
 
