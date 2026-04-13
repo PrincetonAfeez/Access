@@ -336,3 +336,9 @@ class SuspiciousActivityMonitor:
 
     def replace_flagged_cards_for_restore(self, alerts: dict[str, SecurityAlert]) -> None:
         self._flagged_cards = dict(alerts)
+
+class CardRegistry:
+    def __init__(self, starting_number: int = 1) -> None:
+        self._cards: dict[str, Keycard] = {}
+        self._sequence = count(starting_number)
+
