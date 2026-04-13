@@ -97,7 +97,47 @@ class VaultOSCLI:
 
         print(f"{card.card_id} revoked. Reason: {card.revocation_reason}")
 
+    
+    def _attempt_gate_check(self) -> None:
+        gates = self.controller.list_gates()
+        if not gates:
+            print("No gates are configured.")
+            return
 
+        print("\nAvailable gates")
+        for index, gate in enumerate(gates, start=1):
+            schedule = gate.time_window.label if gate.time_window else "Always open"
+            print(
+                f"{index}. {gate.name} | {gate.location} | "
+                f"Min level: {gate.required_access_level.name} | {schedule}"
+            )
+
+        selection = self._prompt_integer("Choose a gate number: ")
+        if selection is None or not (1 <= selection <= len(gates)):
+            print("Invalid gate selection.")
+            return
+
+        gate = gates[selection - 1]
+        self._view_all_cards()
+        card_id = input("Keycard ID: ").strip().upper()
+        if not card_id:
+            print("Keycard ID is required.")
+            return
+
+        timestamp = self._prompt_timestamp()
+        if timestamp is None:
+            return
+
+        try:
+            decision = self.controller.attempt_access(card_id, gate.name, timestamp)
+        except KeyError as exc:
+            print(exc)
+            return
+
+        verdict = "GRANTED" if decision.granted else "DENIED"
+        print(f"{verdict}: {decision.reason}")
+        if decision.warning:
+            print(f"WARNING: {decision.warning}")
 
 
 
