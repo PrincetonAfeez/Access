@@ -165,6 +165,19 @@ class VaultOSCLI:
                 f"{alert.timestamp.strftime('%Y-%m-%d %H:%M:%S')} | "
                 f"{alert.keycard_id} | {alert.message}"
             )
+    
+    def _view_active_cards(self) -> None:
+        cards = self.controller.registry.list_active_cards()
+        if not cards:
+            print("No active cards found.")
+            return
+
+        print("\nActive Cards")
+        for card in cards:
+            print(
+                f"{card.card_id} | {card.owner_name} | {card.access_level.name} | "
+                f"Expires {card.expiry_date.isoformat()}"
+            )
 
 
 
