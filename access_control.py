@@ -226,3 +226,14 @@ class AccessGate:
         if not self.location:
             raise ValueError("Gate location cannot be blank.")
 
+    def check_access(self, keycard: Keycard, timestamp: datetime) -> AccessDecision:
+        ts = naive_facility_moment(timestamp)
+        granted, reason = self._evaluate(keycard, ts)
+        return AccessDecision(
+            granted=granted,
+            reason=reason,
+            keycard_id=keycard.card_id,
+            gate_name=self.name,
+            timestamp=ts,
+        )
+
