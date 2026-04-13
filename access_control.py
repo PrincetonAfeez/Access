@@ -102,4 +102,8 @@ class Keycard:
     @property
     def revoked_at(self) -> datetime | None:
         return self.__revoked_at
-
+    
+    def update_access_level(self, new_level: AccessLevel) -> None:
+        if not isinstance(new_level, AccessLevel):
+            raise TypeError("new_level must be an AccessLevel.")
+        self.__access_level = new_level
