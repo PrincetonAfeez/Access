@@ -191,7 +191,15 @@ class VaultOSCLI:
                 f"{card.card_id} | {card.owner_name} | {card.access_level.name} | "
                 f"{card.status()} | Expires {card.expiry_date.isoformat()}"
             )
-
+    
+    def _prompt_access_level(self) -> AccessLevel | None:
+        print("Access levels: VISITOR, STAFF, MANAGER, ADMIN")
+        raw_value = input("Access level: ").strip()
+        try:
+            return AccessLevel.from_string(raw_value)
+        except ValueError as exc:
+            print(exc)
+            return None
 
 
 
