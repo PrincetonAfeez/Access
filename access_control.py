@@ -170,3 +170,21 @@ class GateSchedule:
     def label(self) -> str:
         return f"{self.start_time.strftime('%H:%M')} - {self.end_time.strftime('%H:%M')}"
 
+@dataclass(frozen=True, slots=True)
+class AccessDecision:
+    granted: bool
+    reason: str
+    keycard_id: str
+    gate_name: str
+    timestamp: datetime
+    warning: str | None = None
+
+    def with_warning(self, warning: str) -> "AccessDecision":
+        return AccessDecision(
+            granted=self.granted,
+            reason=self.reason,
+            keycard_id=self.keycard_id,
+            gate_name=self.gate_name,
+            timestamp=self.timestamp,
+            warning=warning,
+        )
