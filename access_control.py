@@ -41,3 +41,29 @@ class Keycard:
         "__revocation_reason",
         "__revoked_at",
     )
+    
+    def __init__(
+        self,
+        card_id: str,
+        owner_name: str,
+        access_level: AccessLevel,
+        issue_date: date,
+        expiry_date: date,
+    ) -> None:
+        owner_name = owner_name.strip()
+        if not owner_name:
+            raise ValueError("Owner name cannot be blank.")
+        if expiry_date < issue_date:
+            raise ValueError("Expiry date cannot be earlier than issue date.")
+
+        self.__card_id = card_id
+        self.__owner_name = owner_name
+        self.__access_level = access_level
+        self.__issue_date = issue_date
+        self.__expiry_date = expiry_date
+        self.__active = True
+        self.__revoked = False
+        self.__revocation_reason: str | None = None
+        self.__revoked_at: datetime | None = None
+
+
