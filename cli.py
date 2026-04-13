@@ -178,6 +178,19 @@ class VaultOSCLI:
                 f"{card.card_id} | {card.owner_name} | {card.access_level.name} | "
                 f"Expires {card.expiry_date.isoformat()}"
             )
+    
+    def _view_all_cards(self) -> None:
+        cards = self.controller.registry.all_cards()
+        if not cards:
+            print("No cards have been issued.")
+            return
+
+        print("\nIssued Cards")
+        for card in cards:
+            print(
+                f"{card.card_id} | {card.owner_name} | {card.access_level.name} | "
+                f"{card.status()} | Expires {card.expiry_date.isoformat()}"
+            )
 
 
 
