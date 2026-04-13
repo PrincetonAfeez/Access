@@ -150,3 +150,23 @@ class Keycard:
             return "INACTIVE"
         return "ACTIVE"
 
+@dataclass(frozen=True, slots=True)
+class GateSchedule:
+    start_time: time
+    end_time: time
+
+    def __post_init__(self) -> None:
+        if self.start_time == self.end_time:
+            raise ValueError("Schedule start and end time cannot be the same.")
+
+    def allows(self, moment: datetime) -> bool:
+        moment = naive_facility_moment(moment)
+        current_time = moment.time()
+        if self.start_time < self.end_time:
+            return self.start_time <= current_time <= self.end_time
+        return current_time >= self.start_time or current_time <= self.end_time
+
+    @property
+    def label(self) -> str:
+        return f"{self.start_time.strftime('%H:%M')} - {self.end_time.strftime('%H:%M')}"
+
