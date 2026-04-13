@@ -152,6 +152,19 @@ class VaultOSCLI:
                 f"{entry.timestamp.strftime('%Y-%m-%d %H:%M:%S')} | "
                 f"{entry.keycard_id} | {entry.gate_name} | {verdict} | {entry.reason}"
             )
+    
+    def _view_flagged_cards(self) -> None:
+        alerts = self.controller.flagged_cards()
+        if not alerts:
+            print("No flagged cards.")
+            return
+
+        print("\nFlagged Cards")
+        for alert in alerts:
+            print(
+                f"{alert.timestamp.strftime('%Y-%m-%d %H:%M:%S')} | "
+                f"{alert.keycard_id} | {alert.message}"
+            )
 
 
 
