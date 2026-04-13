@@ -200,6 +200,21 @@ class VaultOSCLI:
         except ValueError as exc:
             print(exc)
             return None
+    
+    def _prompt_integer(self, prompt: str, default: int | None = None) -> int | None:
+        raw_value = input(prompt).strip()
+        if not raw_value and default is not None:
+            return default
+        try:
+            value = int(raw_value)
+        except ValueError:
+            print("Please enter a whole number.")
+            return None
+
+        if value < 0:
+            print("Please enter a non-negative number.")
+            return None
+        return value
 
 
 
