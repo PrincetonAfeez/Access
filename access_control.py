@@ -12,4 +12,10 @@ def naive_facility_moment(moment: datetime) -> datetime:
         return moment
     return moment.astimezone().replace(tzinfo=None)
 
+class AccessLevel(IntEnum):
+    VISITOR = 1
+    STAFF = 2
+    MANAGER = 3
+    ADMIN = 4
+
 
