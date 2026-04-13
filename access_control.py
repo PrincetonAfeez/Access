@@ -125,3 +125,8 @@ class Keycard:
             raise ValueError("Cannot deactivate a revoked keycard.")
         self.__active = False
 
+    def reactivate(self) -> None:
+        if self.__revoked:
+            raise ValueError("Cannot reactivate a revoked keycard.")
+        self.__active = True
+
