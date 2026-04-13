@@ -341,4 +341,16 @@ class CardRegistry:
     def __init__(self, starting_number: int = 1) -> None:
         self._cards: dict[str, Keycard] = {}
         self._sequence = count(starting_number)
+    
+    def issue_keycard(
+        self,
+        owner_name: str,
+        access_level: AccessLevel,
+        issue_date: date,
+        expiry_date: date,
+    ) -> Keycard:
+        card_id = f"KC-{next(self._sequence):04d}"
+        card = Keycard(card_id, owner_name, access_level, issue_date, expiry_date)
+        self._cards[card.card_id] = card
+        return card
 
