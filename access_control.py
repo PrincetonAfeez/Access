@@ -329,4 +329,8 @@ class SuspiciousActivityMonitor:
         )
         self._flagged_cards[entry.keycard_id] = alert
         return alert
+    
+    def flagged_cards(self) -> tuple[SecurityAlert, ...]:
+        alerts = sorted(self._flagged_cards.values(), key=lambda item: item.timestamp)
+        return tuple(alerts)
 
