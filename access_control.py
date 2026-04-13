@@ -385,3 +385,16 @@ class CardRegistry:
     def ingest_restored_keycard(self, card: Keycard) -> None:
         self._cards[card.card_id] = card
 
+class AccessController:
+    def __init__(
+        self,
+        registry: CardRegistry,
+        gates: list[AccessGate],
+        access_log: AccessLog | None = None,
+        monitor: SuspiciousActivityMonitor | None = None,
+    ) -> None:
+        self.registry = registry
+        self.log = access_log or AccessLog()
+        self.monitor = monitor or SuspiciousActivityMonitor()
+        self._gates = {gate.name.lower(): gate for gate in gates}
+
