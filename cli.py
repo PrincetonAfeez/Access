@@ -39,6 +39,25 @@ class VaultOSCLI:
                 return
             else:
                 print("Unknown option. Choose a number from the menu.")
+    
+    def _print_menu(self) -> None:
+        print("\nMenu")
+        print("1. Issue a keycard")
+        print("2. Revoke a keycard")
+        print("3. Attempt a gate check")
+        print("4. View the access log")
+        print("5. View flagged cards")
+        print("6. View active cards")
+        print("7. Exit")
+
+
+
+
+
+
+
+
+
 
 
 
