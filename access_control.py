@@ -445,3 +445,28 @@ class AccessController:
 def build_demo_controller() -> AccessController:
     registry = CardRegistry()
     today = date.today()
+    
+    registry.issue_keycard(
+        owner_name="Avery Stone",
+        access_level=AccessLevel.VISITOR,
+        issue_date=today,
+        expiry_date=today + timedelta(days=14),
+    )
+    registry.issue_keycard(
+        owner_name="Jordan Lee",
+        access_level=AccessLevel.STAFF,
+        issue_date=today - timedelta(days=5),
+        expiry_date=today + timedelta(days=45),
+    )
+    registry.issue_keycard(
+        owner_name="Sam Rivera",
+        access_level=AccessLevel.MANAGER,
+        issue_date=today - timedelta(days=10),
+        expiry_date=today + timedelta(days=30),
+    )
+    registry.issue_keycard(
+        owner_name="Riley Chen",
+        access_level=AccessLevel.ADMIN,
+        issue_date=today - timedelta(days=30),
+        expiry_date=today + timedelta(days=365),
+    )
