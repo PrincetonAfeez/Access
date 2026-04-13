@@ -291,4 +291,16 @@ class AccessLog:
         self._entries = list(entries)
         self._alerts = list(alerts)
 
+class SuspiciousActivityMonitor:
+    def __init__(self, threshold: int = 3, window: timedelta = timedelta(minutes=10)) -> None:
+        if threshold < 1:
+            raise ValueError("Threshold must be at least 1.")
+        if window <= timedelta(0):
+            raise ValueError("Window must be positive.")
+
+        self.threshold = threshold
+        self.window = window
+        self._denials: dict[str, deque[datetime]] = defaultdict(deque)
+        self._flagged_cards: dict[str, SecurityAlert] = {}
+
 
