@@ -197,3 +197,11 @@ class AccessLogEntry:
     granted: bool
     reason: str
 
+@dataclass(frozen=True, slots=True)
+class SecurityAlert:
+    timestamp: datetime
+    keycard_id: str
+    denied_attempts: int
+    window_minutes: int
+    message: str
+
