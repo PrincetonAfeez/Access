@@ -334,3 +334,5 @@ class SuspiciousActivityMonitor:
         alerts = sorted(self._flagged_cards.values(), key=lambda item: item.timestamp)
         return tuple(alerts)
 
+    def replace_flagged_cards_for_restore(self, alerts: dict[str, SecurityAlert]) -> None:
+        self._flagged_cards = dict(alerts)
