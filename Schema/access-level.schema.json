@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./access-level.schema.json",
+  "title": "AccessLevel",
+  "description": "Security clearance level used throughout the access-control domain model.",
+  "type": "string",
+  "enum": [
+    "VISITOR",
+    "STAFF",
+    "MANAGER",
+    "ADMIN"
+  ],
+  "examples": [
+    "VISITOR",
+    "STAFF"
+  ]
+}

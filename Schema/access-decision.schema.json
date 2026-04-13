@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./access-decision.schema.json",
+  "title": "AccessDecision",
+  "description": "Outcome of evaluating a keycard at a gate.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "granted": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "keycard_id": {
+      "type": "string",
+      "pattern": "^KC-\\d{4}$"
+    },
+    "gate_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "warning": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "granted",
+    "reason",
+    "keycard_id",
+    "gate_name",
+    "timestamp",
+    "warning"
+  ],
+  "examples": [
+    {
+      "granted": false,
+      "reason": "Insufficient access level. Requires ADMIN.",
+      "keycard_id": "KC-0001",
+      "gate_name": "Control Room",
+      "timestamp": "2026-04-12T10:00:00",
+      "warning": null
+    }
+  ]
+}

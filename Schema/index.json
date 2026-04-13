@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Access Schema Index",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "file"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schemas"
+  ],
+  "examples": [
+    {
+      "schemas": [
+        {
+          "name": "AccessLevel",
+          "file": "access-level.schema.json"
+        },
+        {
+          "name": "Keycard",
+          "file": "keycard.schema.json"
+        },
+        {
+          "name": "GateSchedule",
+          "file": "gate-schedule.schema.json"
+        },
+        {
+          "name": "AccessGate",
+          "file": "access-gate.schema.json"
+        },
+        {
+          "name": "AccessDecision",
+          "file": "access-decision.schema.json"
+        },
+        {
+          "name": "AccessLogEntry",
+          "file": "access-log-entry.schema.json"
+        },
+        {
+          "name": "SecurityAlert",
+          "file": "security-alert.schema.json"
+        }
+      ]
+    }
+  ],
+  "schemas": [
+    {
+      "name": "AccessLevel",
+      "file": "access-level.schema.json"
+    },
+    {
+      "name": "Keycard",
+      "file": "keycard.schema.json"
+    },
+    {
+      "name": "GateSchedule",
+      "file": "gate-schedule.schema.json"
+    },
+    {
+      "name": "AccessGate",
+      "file": "access-gate.schema.json"
+    },
+    {
+      "name": "AccessDecision",
+      "file": "access-decision.schema.json"
+    },
+    {
+      "name": "AccessLogEntry",
+      "file": "access-log-entry.schema.json"
+    },
+    {
+      "name": "SecurityAlert",
+      "file": "security-alert.schema.json"
+    }
+  ]
+}

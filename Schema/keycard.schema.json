@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./keycard.schema.json",
+  "title": "Keycard",
+  "description": "Physical credential with identity, status, and permission metadata.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "card_id": {
+      "type": "string",
+      "pattern": "^KC-\\d{4}$",
+      "description": "Generated card identifier."
+    },
+    "owner_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "access_level": {
+      "$ref": "./access-level.schema.json"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "revoked": {
+      "type": "boolean"
+    },
+    "revocation_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "revoked_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE",
+        "EXPIRED",
+        "REVOKED"
+      ],
+      "description": "Optional derived state for serialized views."
+    }
+  },
+  "required": [
+    "card_id",
+    "owner_name",
+    "access_level",
+    "issue_date",
+    "expiry_date",
+    "active",
+    "revoked",
+    "revocation_reason",
+    "revoked_at"
+  ],
+  "examples": [
+    {
+      "card_id": "KC-0001",
+      "owner_name": "Avery Stone",
+      "access_level": "VISITOR",
+      "issue_date": "2026-04-12",
+      "expiry_date": "2026-04-26",
+      "active": true,
+      "revoked": false,
+      "revocation_reason": null,
+      "revoked_at": null,
+      "status": "ACTIVE"
+    }
+  ]
+}

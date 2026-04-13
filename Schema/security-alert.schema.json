@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./security-alert.schema.json",
+  "title": "SecurityAlert",
+  "description": "Alert emitted after repeated denied attempts within a time window.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "keycard_id": {
+      "type": "string",
+      "pattern": "^KC-\\d{4}$"
+    },
+    "denied_attempts": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "window_minutes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "timestamp",
+    "keycard_id",
+    "denied_attempts",
+    "window_minutes",
+    "message"
+  ],
+  "examples": [
+    {
+      "timestamp": "2026-04-12T10:04:00",
+      "keycard_id": "KC-0001",
+      "denied_attempts": 3,
+      "window_minutes": 5,
+      "message": "Suspicious activity detected: 3 denied attempts within 5 minutes."
+    }
+  ]
+}

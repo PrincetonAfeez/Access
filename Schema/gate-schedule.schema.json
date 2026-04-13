@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./gate-schedule.schema.json",
+  "title": "GateSchedule",
+  "description": "Facility-local schedule window for gate access.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "start_time": {
+      "type": "string",
+      "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d)?$",
+      "description": "Start of the access window in 24-hour local time."
+    },
+    "end_time": {
+      "type": "string",
+      "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d)?$",
+      "description": "End of the access window in 24-hour local time."
+    }
+  },
+  "required": [
+    "start_time",
+    "end_time"
+  ],
+  "examples": [
+    {
+      "start_time": "08:00",
+      "end_time": "18:00"
+    }
+  ]
+}

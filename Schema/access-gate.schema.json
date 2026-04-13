@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./access-gate.schema.json",
+  "title": "AccessGate",
+  "description": "A physical checkpoint with minimum access requirements and an optional time window.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "location": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_access_level": {
+      "$ref": "./access-level.schema.json"
+    },
+    "time_window": {
+      "oneOf": [
+        {
+          "$ref": "./gate-schedule.schema.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "location",
+    "required_access_level",
+    "time_window"
+  ],
+  "examples": [
+    {
+      "name": "Operations Wing",
+      "location": "East Hall",
+      "required_access_level": "STAFF",
+      "time_window": {
+        "start_time": "08:00",
+        "end_time": "18:00"
+      }
+    }
+  ]
+}

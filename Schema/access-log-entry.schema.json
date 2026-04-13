@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./access-log-entry.schema.json",
+  "title": "AccessLogEntry",
+  "description": "Immutable audit-log record for each access attempt.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "keycard_id": {
+      "type": "string",
+      "pattern": "^KC-\\d{4}$"
+    },
+    "gate_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "granted": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "timestamp",
+    "keycard_id",
+    "gate_name",
+    "granted",
+    "reason"
+  ],
+  "examples": [
+    {
+      "timestamp": "2026-04-12T10:00:00",
+      "keycard_id": "KC-0001",
+      "gate_name": "Lobby Turnstile",
+      "granted": true,
+      "reason": "Access granted."
+    }
+  ]
+}
