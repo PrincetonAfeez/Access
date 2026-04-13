@@ -86,3 +86,20 @@ class Keycard:
     @property
     def expiry_date(self) -> date:
         return self.__expiry_date
+
+    @property
+    def active(self) -> bool:
+        return self.__active
+
+    @property
+    def revoked(self) -> bool:
+        return self.__revoked
+
+    @property
+    def revocation_reason(self) -> str | None:
+        return self.__revocation_reason
+
+    @property
+    def revoked_at(self) -> datetime | None:
+        return self.__revoked_at
+
