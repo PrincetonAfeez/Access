@@ -76,6 +76,26 @@ class VaultOSCLI:
             f"Issued {card.card_id} to {card.owner_name} "
             f"({card.access_level.name}) through {card.expiry_date.isoformat()}."
         )
+    
+    def _revoke_keycard(self) -> None:
+        self._view_all_cards()
+        card_id = input("Keycard ID to revoke: ").strip().upper()
+        if not card_id:
+            print("Keycard ID is required.")
+            return
+
+        reason = input("Revocation reason: ").strip()
+        if not reason:
+            print("A revocation reason is required.")
+            return
+
+        try:
+            card = self.controller.registry.revoke_card(card_id, reason)
+        except (KeyError, ValueError) as exc:
+            print(exc)
+            return
+
+        print(f"{card.card_id} revoked. Reason: {card.revocation_reason}")
 
 
 
