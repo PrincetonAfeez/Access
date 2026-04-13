@@ -236,4 +236,26 @@ class AccessGate:
             gate_name=self.name,
             timestamp=ts,
         )
+    
+    def _evaluate(self, keycard: Keycard, timestamp: datetime) -> tuple[bool, str]:
+        if keycard.revoked:
+            reason = keycard.revocation_reason or "No reason recorded."
+            return False, f"Keycard revoked: {reason}"
+        if not keycard.active:
+            return False, "Keycard is deactivated (not revoked)."
+        if keycard.is_expired(timestamp):
+            return False, f"Keycard expired on {keycard.expiry_date.isoformat()}."
+        if keycard.access_level < self.required_access_level:
+            return (
+                False,
+                f"Insufficient access level. Requires {self.required_access_level.name}.",
+            )
+        if self.time_window and not self.time_window.allows(timestamp):
+            return (
+                False,
+                f"Outside allowed access window for this gate ({self.time_window.label}).",
+            )
+        return True, "Access granted."
+
+
 
