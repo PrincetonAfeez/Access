@@ -215,28 +215,18 @@ class VaultOSCLI:
             print("Please enter a non-negative number.")
             return None
         return value
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    def _prompt_timestamp(self) -> datetime | None:
+        raw_value = input(
+            "Timestamp for the attempt [press Enter for now, or use YYYY-MM-DD HH:MM]: "
+        ).strip()
+        if not raw_value:
+            return datetime.now()
+        try:
+            return datetime.strptime(raw_value, "%Y-%m-%d %H:%M")
+        except ValueError:
+            print("Timestamp must use the format YYYY-MM-DD HH:MM.")
+            return None
 
 
 def main() -> None:
