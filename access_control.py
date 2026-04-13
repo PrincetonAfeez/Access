@@ -205,3 +205,24 @@ class SecurityAlert:
     window_minutes: int
     message: str
 
+
+class AccessGate:
+    __slots__ = ("name", "location", "required_access_level", "time_window")
+
+    def __init__(
+        self,
+        name: str,
+        location: str,
+        required_access_level: AccessLevel,
+        time_window: GateSchedule | None = None,
+    ) -> None:
+        self.name = name.strip()
+        self.location = location.strip()
+        self.required_access_level = required_access_level
+        self.time_window = time_window
+
+        if not self.name:
+            raise ValueError("Gate name cannot be blank.")
+        if not self.location:
+            raise ValueError("Gate location cannot be blank.")
+
